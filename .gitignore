@@ -1,6 +1,7 @@
 .eunit
 deps
 *.o
+*.swp
 *.beam
 *.plt
 erl_crash.dump
@@ -8,3 +9,6 @@ ebin
 rel/example_project
 .concrete/DEV_MODE
 .rebar
+ucpparse.erl
+ucplex.erl
+ucp_lex.erl
