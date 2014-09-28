@@ -31,5 +31,4 @@ ucp_lexer_test_() ->
                  end
          end}
         || {S,T,L,_} <- test_helper:get_tests()]}.
-
 -endif.

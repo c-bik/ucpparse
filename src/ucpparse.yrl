@@ -8,6 +8,7 @@ Nonterminals
     header
     data
     checksum
+    op_or_result
     ucp.
 
 Terminals
@@ -23,13 +24,17 @@ Rootsymbol ucp.
 
 % Grammer
 ucp -> 'stx' header '/' data '/' checksum 'etx'
-       : [{header, '$2'}, {data, '$4'}, {checksum, '$6'}].
+       : #{"header" => '$2', "data" => '$4', checksum => '$6'}.
 
 checksum -> '$empty'    : undefined.
 checksum -> TERM        : '$1'.
 
-header -> '$empty'      : undefined.
-header -> TERM          : '$1'.
+header -> TERM '/' TERM '/' op_or_result '/' TERM
+          : #{"trn" => '$1', "len" => '$3'
+             , "req_resp" => '$5', "operation_type" => '$7'}.
+
+op_or_result -> 'O' : operation.
+op_or_result -> 'R' : result.
 
 data -> '$empty'        : undefined.
 data -> TERM            : '$1'.
@@ -74,5 +79,4 @@ ucp_parser_test_() ->
                  end
          end}
         || {S,T,L,P} <- test_helper:get_tests()]}.
-
 -endif.
